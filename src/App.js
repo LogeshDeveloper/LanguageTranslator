@@ -9,14 +9,14 @@ class Translator extends Component{
     }
   }
 
-  componentDidMount(){
-    fetch("http://146.148.85.67/processWordJSON?inString&lang")
-    .then(res => res.json())
-    .then((data) =>{
-      this.setState({items: data.twords})
-    })
-
-  }
+   async ajaxcall() 
+{
+  let response = await fetch(`http://146.148.85.67/processWordJSON?inString=#dyanamicword&lang=#langcode"`);
+  let data = await response.json()
+  .then((data) =>{
+    this.setState({items: data.twords})
+  })
+}
 
   render(){
     return(
