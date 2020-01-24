@@ -16,6 +16,8 @@ class Translator extends Component{
   .then((data) =>{
     this.setState({items: data.twords})
   })
+  let dyanamicword = data[0].dyanamicword;
+
 }
 
   render(){
