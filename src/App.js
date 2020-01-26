@@ -9,29 +9,36 @@ class Translator extends Component{
     }
   }
 
-   async ajaxcall() 
-{
-  let response = await fetch(`http://146.148.85.67/processWordJSON?inString=#dyanamicword&lang=#langcode"`);
-  let data = await response.json()
-  .then((data) =>{
-    this.setState({items: data.twords})
-  })
-  let dyanamicword = data[0].dyanamicword;
+   ajax_xhr = () => {
+    const newString = document.getElementById('user').value;;
+    const newLang = 'tamil';
+    const data = `?inString${newString}&lang${newLang}`;
+    let url = new XMLHttpRequest();
+          url.open('GET', `http://146.148.85.67/processWordJSON${data}`);
+    fetch(
+        `http://146.148.85.67/processWordJSON${data}`,
+        { method: 'GET' }
+    ).then( response => {
+        console.log('inside')
+        response.json()
+    } )
+        .then( json => console.log(json) )
+        .catch( error => console.error('error:', error) );
 
-}
+};
 
   render(){
     return(
       <div>
         Enter the text:
-      <input type="text" name="text"/>
+      <input type="text" name="text" id="user"/>
       Translated text:
       <input type="text" name="text"/>
-      <input list="hosting-plan" type="text"/>
+      Select Your Language:<input list="hosting-plan" type="text"/>
     <datalist id="hosting-plan">
-     <option value="small"/>
-     <option value="medium"/>
-     <option value="large"/>
+     <option value="Tamil"/>
+     <option value="Hindi"/>
+     <option value="Telgu"/>
     </datalist>
       </div>
     );
