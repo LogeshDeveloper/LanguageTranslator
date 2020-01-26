@@ -29,18 +29,22 @@ class Translator extends Component{
 
   render(){
     return(
-      <div>
-        Enter the text:
-      <input type="text" name="text" id="user"/>
+      <body>
+      <div className="container">
+        <div className="textarea">
+      Enter the text:
+      <input type="text" name="text" id="user" className="textlayer1" placeholder="Enter the text"/><br/>
       Translated text:
-      <input type="text" name="text"/>
-      Select Your Language:<input list="hosting-plan" type="text"/>
+      <input type="text" name="text" className="textlayer2" placeholder="Translated Text"/><br/>
+      Select Your Language:<input list="hosting-plan" type="text" className="dropdown" placeholder="Select Your Language"/>
+      </div>
     <datalist id="hosting-plan">
      <option value="Tamil"/>
      <option value="Hindi"/>
      <option value="Telgu"/>
     </datalist>
       </div>
+      </body>
     );
   }
 }
