@@ -5,21 +5,21 @@ import './App.css';
 function App() {
   
   return (
-    <div class="main_container">
+    <div className="main_container">
         <fieldset>
             <legand>
                 <label for="language_dropdown">Language:</label>
-                <span class="language_dropdown_span">
-                    <select id="language_dropdown" class="language_dropdown">
+                <span className="language_dropdown_span">
+                    <select id="language_dropdown" className="language_dropdown">
                         <option>Tamil</option>
                         <option>Telugu</option>
                         <option>Hindi</option>
                     </select>
                 </span>
             </legand>
-            <div class="description">
+            <div className="description">
                 <textarea id="description_textarea" placeholder="Type your content here"></textarea>
-                <div class="description_suggestion"></div>
+                <div className="description_suggestion"></div>
             </div>
         </fieldset>
     </div>
