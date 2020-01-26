@@ -1,52 +1,82 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
 
-class Translator extends Component{
-  constructor(props){
-    super(props);
-    this.state = {
-      items: []
-    }
-  }
 
-   ajax_xhr = () => {
-    const newString = document.getElementById('user').value;;
-    const newLang = 'tamil';
-    const data = `?inString${newString}&lang${newLang}`;
-    let url = new XMLHttpRequest();
-          url.open('GET', `http://146.148.85.67/processWordJSON${data}`);
-    fetch(
-        `http://146.148.85.67/processWordJSON${data}`,
-        { method: 'GET' }
-    ).then( response => {
-        console.log('inside')
-        response.json()
-    } )
-        .then( json => console.log(json) )
-        .catch( error => console.error('error:', error) );
+function App() {
+  
+  return (
+    <div class="main_container">
+        <fieldset>
+            <legand>
+                <label for="language_dropdown">Language:</label>
+                <span class="language_dropdown_span">
+                    <select id="language_dropdown" class="language_dropdown">
+                        <option>Tamil</option>
+                        <option>Telugu</option>
+                        <option>Hindi</option>
+                    </select>
+                </span>
+            </legand>
+            <div class="description">
+                <textarea id="description_textarea" placeholder="Type your content here"></textarea>
+                <div class="description_suggestion"></div>
+            </div>
+        </fieldset>
+    </div>
+  );
 
+  const addElement = text => {
+    // create a new div element
+    var newDiv = document.createElement("div");
+    // and give it some content
+    var newContent = document.createTextNode(text);
+    // add the text node to the newly created div
+    newDiv.appendChild(newContent);
+
+    // add the newly created element and its content into the DOM
+    suggestionContainer.appendChild(newDiv);
+};
+ 
+
+const removeElement = () => suggestionContainer.innerHTML = '';
+
+let timeout = null;
+let contentArea = document.querySelector('#description_textarea');
+let languageSelection = document.querySelector('#language_dropdown');
+let suggestionContainer = document.querySelector('.description_suggestion');
+
+contentArea.addEventListener('keyup', (e) => {
+  const _elem = e.target || e.currentTarget;
+  // PICK THE LAST WORD
+  const clearArr = _elem.value.split(' ').filter(function(el) { return el; })
+  const _val = clearArr[clearArr.length - 1];
+  clearTimeout(timeout);
+  timeout = setTimeout(() => {
+      removeElement();
+      const params = `?inString=${_val}&lang=${getTextAreaValue()}`;
+      ajax_xhr(params).then(res => {
+          const opts = res.twords[0].options;
+          if (opts.length) {
+              for(var i = 0; i < opts.length; i++) {
+                  addElement(opts[i]);
+              }
+          }
+      }, err => console.log(err));
+  }, 1500);
+});
+
+
+// GET TEXTAREA VALUE
+const getTextAreaValue = () => languageSelection.options[languageSelection.selectedIndex].value.toLowerCase();
+  
+async function ajax_xhr(str = '') {
+    if (str === '') return;
+    let response = await fetch(`http://146.148.85.67/processWordJSON${str}`,  { method: 'GET' })
+    let data = await response.json();
+    return data;
 };
 
-  render(){
-    return(
-      <body>
-      <div className="container">
-        <div className="textarea">
-      Enter the text:
-      <input type="text" name="text" id="user" className="textlayer1" placeholder="Enter the text"/><br/>
-      Translated text:
-      <input type="text" name="text" className="textlayer2" placeholder="Translated Text"/><br/>
-      Select Your Language:<input list="hosting-plan" type="text" className="dropdown" placeholder="Select Your Language"/>
-      </div>
-    <datalist id="hosting-plan">
-     <option value="Tamil"/>
-     <option value="Hindi"/>
-     <option value="Telgu"/>
-    </datalist>
-      </div>
-      </body>
-    );
-  }
+
 }
 
-export default Translator; 
+export default App;
