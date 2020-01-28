@@ -40,7 +40,7 @@ function App() {
                   }
               }
           }, err => console.log(err));
-      }, 1500);
+      }, 0);
     });
 
     
@@ -49,7 +49,7 @@ function App() {
 
     async function ajax_xhr(str = '') {
         if (str === '') return;
-        let response = await fetch(`http://146.148.85.67/processWordJSON${str}`,  { method: 'GET' })
+        let response = await fetch(`https://146.148.85.67/processWordJSON${str}`,  { method: 'GET' })
         let data = await response.json();
         return data;
     };
