@@ -1,15 +1,18 @@
 body * {
   font-family: Helvetica;
   font-size: 14px;
+  background: grey;
 }
+
 .main_container {
   max-width: 935px;
   margin: auto;
   padding: 0 8px;
   display: flex;
   align-items: center;
-  height: 500px;
+  height: 690px;
 }
+
 .main_container fieldset {
   border: 0px none;
   padding: 20px;
@@ -18,6 +21,7 @@ body * {
 .main_container fieldset .language_dropdown_span {
   border: 1px solid #ddd;
   padding: 5px;
+  background: white;
 }
 .main_container fieldset .language_dropdown {
   padding: 5px;
@@ -32,7 +36,16 @@ body * {
   width: 100%;
   height: 100px;
   padding: 10px;
+  background: white;
 }
 .main_container fieldset .description description_suggestion {
   display: none;
+}
+
+.description_suggestion{
+  border-style: inset;
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  background: white;
 }
